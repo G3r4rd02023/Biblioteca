@@ -8,7 +8,7 @@ namespace Biblioteca.Frontend
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddHttpClient();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -28,7 +28,7 @@ namespace Biblioteca.Frontend
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login}/{action=IniciarSesion}/{id?}");
 
             app.Run();
         }
