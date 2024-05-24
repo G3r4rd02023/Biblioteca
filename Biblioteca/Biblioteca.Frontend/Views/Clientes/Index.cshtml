@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Biblioteca.Frontend.Models.Categoria>
+﻿@model IEnumerable<Biblioteca.Frontend.Models.Cliente>
 @{
     ViewData["Title"] = "Index";
 }
@@ -23,50 +23,23 @@
     </script>
 }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                title: '¡Error!',
-                text: '@TempData["ErrorMessage"]',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        });
-    </script>
-}
-
-@if (TempData["ModelErrors"] != null)
-{
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                title: 'Errores de Validación',
-                text: '@TempData["ModelErrors"]',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        });
-    </script>
-}
-
 <p>
-    <a onclick="showInPopup('@Url.Action("Create", "Categorias", new { id = 0 }, Context.Request.Scheme)' , '')" 
-    class="btn btn-sm btn-primary text-white"><i class="fa fa-plus-circle"></i> Agregar una categoria</a>
+    <a onclick="showInPopup('@Url.Action("Create", "Clientes", new { id = 0 }, Context.Request.Scheme)' , '')" 
+    class="btn btn-sm btn-primary text-white"><i class="fa fa-plus-circle"></i> Agregar un cliente</a>
 </p>
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header text-center">
-            <h5>Lista de Categorias</h5>
+            <h5>Lista de Clientes</h5>
         </div>
         <div class="card-body">
-            <table id="categoria" class="table table-hover table responsive table stripped">
+            <table id="cliente" class="table table-hover table responsive table stripped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nombre</th>
+                        <th scope="col">Codigo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -75,9 +48,10 @@
                     {
                         <tr>
                             <th scope="row">@item.Id</th>
-                            <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NombreCompleto)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Codigo)</td>
                             <td>
-                                <a onclick="showInPopup('@Url.Action("Edit", "Categorias", new { id = item.Id }, Context.Request.Scheme)' ,
+                                <a onclick="showInPopup('@Url.Action("Edit", "Clientes", new { id = item.Id }, Context.Request.Scheme)' ,
                     '')" class="btn btn-outline-warning btn-sm"><i class="fa fa-pencil-alt"></i> </a>
                                 <button data-id="@item.Id" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
                                     <i class="fa fa-trash"></i>
@@ -103,7 +77,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#categoria').DataTable({
+            $('#cliente').DataTable({
                 "language": {
                     url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
                 },
@@ -112,6 +86,6 @@
     </script>
 
     <script>
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Categorias/Delete/', false);
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Clientes/Delete/', false);
     </script>
 }
