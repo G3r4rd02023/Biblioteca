@@ -40,7 +40,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Cliente", b =>
@@ -64,7 +64,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Clientes", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Correlativo", b =>
@@ -96,7 +96,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Correlativos");
+                    b.ToTable("Correlativos", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Libro", b =>
@@ -135,7 +135,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Libros");
+                    b.ToTable("Libros", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Prestamo", b =>
@@ -169,7 +169,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasIndex("LibroId");
 
-                    b.ToTable("Prestamos");
+                    b.ToTable("Prestamos", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Usuario", b =>
@@ -200,7 +200,7 @@ namespace Biblioteca.Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Backend.Models.Libro", b =>

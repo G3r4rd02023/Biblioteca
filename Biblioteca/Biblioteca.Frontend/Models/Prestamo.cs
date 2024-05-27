@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Biblioteca.Backend.Models
+namespace Biblioteca.Frontend.Models
 {
     public class Prestamo
     {
@@ -15,5 +17,13 @@ namespace Biblioteca.Backend.Models
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string EstadoPrestamo { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> Libros { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem> Clientes { get; set; }
+
+
     }
 }

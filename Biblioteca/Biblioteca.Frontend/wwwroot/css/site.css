@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.estado-pendiente {
+    background-color: red; /* Color rojo para Pendiente */
+    padding: 5px 10px; /* Ajusta el relleno como prefieras */
+    border-radius: 5px; /* Añade un borde redondeado si lo deseas */
+   
+}
+
+.estado-disponible {
+    background-color: green; /* Color verde para Disponible */
+    padding: 5px 10px; /* Ajusta el relleno como prefieras */
+    border-radius: 5px; /* Añade un borde redondeado si lo deseas */
+}

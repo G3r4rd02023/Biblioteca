@@ -1,3 +1,5 @@
+using Biblioteca.Frontend.Services;
+
 namespace Biblioteca.Frontend
 {
     public class Program
@@ -9,6 +11,7 @@ namespace Biblioteca.Frontend
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IServicioLista, ServicioLista>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

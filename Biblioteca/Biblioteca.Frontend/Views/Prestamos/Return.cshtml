@@ -1,0 +1,53 @@
+﻿@model Biblioteca.Frontend.Models.Prestamo
+@{
+    ViewData["Title"] = "Return";
+    Layout = null;
+}
+
+<div class=" col-md-12">
+    <div class=" card">
+        <div class=" card-header text-center">            
+            <h5> Devolucion</h5>
+        </div>
+        <div class=" card-body text-center">
+            <form asp-action="Return" method="post">
+            <input type="hidden" asp-for="EstadoPrestamo" />
+            <input type="hidden" asp-for="LibroId" />
+            <input type="hidden" asp-for="ClienteId" />
+            <input type="hidden" asp-for="FechaPrestamo" />
+            <div>
+                <h4>Informacion del prestamo</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Cliente
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Cliente.NombreCompleto)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Libro
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Libro.Titulo)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Fecha
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FechaPrestamo)
+                    </dd>                   
+                </dl>
+            </div>
+
+                <div class=" card-footer ">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
