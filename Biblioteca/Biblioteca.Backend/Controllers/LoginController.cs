@@ -44,7 +44,7 @@ namespace Biblioteca.Backend.Controllers
 
            
             var usuario = await _context.Usuarios
-                .SingleOrDefaultAsync(u => u.NombreUsuario == login.NombreUsuario);
+                .SingleOrDefaultAsync(u => u.Correo == login.NombreUsuario);
 
             if (usuario != null)
             {

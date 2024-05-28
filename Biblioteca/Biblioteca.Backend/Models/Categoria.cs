@@ -8,7 +8,7 @@ namespace Biblioteca.Backend.Models
 
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Categoria")]
+        [Display(Name = "Género")]
         public string Nombre { get; set; }
 
         [Display(Name = "Fecha de Creación")]

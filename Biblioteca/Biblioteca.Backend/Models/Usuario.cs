@@ -13,8 +13,8 @@ namespace Biblioteca.Backend.Models
 
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Usuario")]
-        public string NombreUsuario { get; set; }
+        [Display(Name = "Email")]
+        public string Correo { get; set; }
 
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]

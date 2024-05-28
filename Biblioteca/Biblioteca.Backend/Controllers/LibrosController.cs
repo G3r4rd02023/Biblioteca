@@ -20,7 +20,9 @@ namespace Biblioteca.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _context.Libros.ToListAsync());
+            return Ok(await _context.Libros
+                .Include(l => l.Categoria)
+                .ToListAsync());
         }
 
         [HttpPost]
@@ -35,6 +37,7 @@ namespace Biblioteca.Backend.Controllers
         public async Task<IActionResult> GetAsync(int id)
         {
             var libro = await _context.Libros
+                 .Include(l => l.Categoria)
                 .SingleOrDefaultAsync(c => c.Id == id);
             if (libro == null)
             {
