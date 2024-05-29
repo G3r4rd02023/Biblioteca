@@ -1,0 +1,34 @@
+﻿@model Biblioteca.Frontend.Models.Usuario
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<div class=" col-md-12">
+    <div class=" card">
+        <div class=" card-header text-center">
+            <h5> Editar Usuario</h5>
+        </div>
+        <div class=" card-body text-center">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                
+                <div class="form-group">
+                    <label></label>
+                    <input asp-for="NombreCompleto" class="form-control" placeholder=" Nombre Completo" />
+                    <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+                </div>
+                <input class="form-control mb-3" type="text" placeholder="Email" required asp-for="Correo" />
+                <input class="form-control mb-3" type="password" placeholder="Contraseña" required asp-for="Clave" />
+                <div class=" card-footer ">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

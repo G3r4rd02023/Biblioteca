@@ -83,5 +83,17 @@ namespace Biblioteca.Frontend.Services
 
             return [];
         }
+
+        public static List<SelectListItem> GetSelectList<T>() where T : Enum
+        {
+            return Enum.GetValues(typeof(T))
+                       .Cast<T>()
+                       .Select(e => new SelectListItem
+                       {
+                           Value = e.ToString(),
+                           Text = e.ToString()
+                       })
+                       .ToList();
+        }
     }
 }

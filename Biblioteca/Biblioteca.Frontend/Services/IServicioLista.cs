@@ -9,6 +9,6 @@ namespace Biblioteca.Frontend.Services
         Task<IEnumerable<SelectListItem>> GetListaClientes();
 
         Task<IEnumerable<SelectListItem>> GetListaLibros();
-
+       
     }
 }

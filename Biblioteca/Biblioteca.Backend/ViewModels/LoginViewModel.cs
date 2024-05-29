@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Biblioteca.Backend.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteca.Backend.ViewModels
 {
@@ -11,5 +12,8 @@ namespace Biblioteca.Backend.ViewModels
         [Required]
         [MaxLength(100)]
         public string Clave { get; set; }
+
+        
+
     }
 }

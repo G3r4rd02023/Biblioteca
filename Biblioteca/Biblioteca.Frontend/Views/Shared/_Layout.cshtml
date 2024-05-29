@@ -32,22 +32,59 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#"></a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Menu
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Libros" asp-action="Index">Libros</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Clientes" asp-action="Index">Clientes</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index">Categorias</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Clientes" asp-action="Index">Clientes</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" asp-controller="Prestamos" asp-action="Index">Prestamos</a></li>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="IniciarSesion">Cerrar Sesion</a>
-                                </ul>
-                            </li>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Menu
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+                                        <li><a class="dropdown-item" asp-controller="Libros" asp-action="Index">Libros</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Clientes" asp-action="Index">Clientes</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index">Categorias</a></li>                                        
+                                        <li><a class="dropdown-item" asp-controller="Usuarios" asp-action="Index">Usuarios</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" asp-controller="Prestamos" asp-action="Index">Prestamos</a></li>
+                                        
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Lector"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Libros" asp-action="Index">Libros</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+                                </li>
+                            }
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Bibliotecario"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Libros" asp-action="Index">Libros</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Prestamos" asp-action="Index">Prestamos</a>
+                                </li>
+                            }
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios"
+                                       asp-action="Edit"><strong>Hola! @User.Identity.Name</strong></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="CerrarSesion">Cerrar Sesión</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="IniciarSesion">Iniciar Sesión</a>
+                                </li>
+                            }
+
                         </ul>
                     </div>
                 </div>

@@ -11,5 +11,7 @@ namespace Biblioteca.Frontend.Models
         [Required]
         [MaxLength(100)]
         public string Clave { get; set; }
+
+        
     }
 }

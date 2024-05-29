@@ -41,10 +41,9 @@ namespace Biblioteca.Backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-
            
             var usuario = await _context.Usuarios
-                .SingleOrDefaultAsync(u => u.Correo == login.NombreUsuario);
+                .SingleOrDefaultAsync(u => u.Correo == login.NombreUsuario);          
 
             if (usuario != null)
             {

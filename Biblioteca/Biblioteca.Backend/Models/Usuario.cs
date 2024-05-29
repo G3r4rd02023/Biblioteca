@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Biblioteca.Backend.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteca.Backend.Models
 {
@@ -23,7 +24,9 @@ namespace Biblioteca.Backend.Models
         public string Clave { get; set; }
 
         [Display(Name = "Fecha de Creación")]
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;      
+        public Roles RolUsuario { get; set; }
+
 
     }
 }
