@@ -2,9 +2,9 @@
 {
     public enum Roles
     {
-        Administrador,
+        Lector,
         Bibliotecario,
-        Lector
+        Administrador
     }
 }
 

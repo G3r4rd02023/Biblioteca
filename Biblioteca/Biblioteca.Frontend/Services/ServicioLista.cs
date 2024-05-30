@@ -38,28 +38,7 @@ namespace Biblioteca.Frontend.Services
             return [];
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetListaClientes()
-        {
-            var response = await _httpClient.GetAsync("/api/Clientes");
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var clientes = JsonConvert.DeserializeObject<IEnumerable<Cliente>>(content);
-                var listaClientes = clientes.Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.NombreCompleto
-                }).ToList();
-                listaClientes.Insert(0, new SelectListItem
-                {
-                    Value = "",
-                    Text = "Seleccione un Cliente"
-                });
-                return listaClientes;
-            }
-
-            return [];
-        }
+        
 
         public async Task<IEnumerable<SelectListItem>> GetListaLibros()
         {

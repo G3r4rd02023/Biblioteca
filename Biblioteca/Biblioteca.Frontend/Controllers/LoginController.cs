@@ -20,7 +20,11 @@ namespace Biblioteca.Frontend.Controllers
 
         public IActionResult Registro()
         {
-            return View();
+            Usuario usuario = new()
+            {
+                Estado = "Activo"
+            };
+            return View(usuario);
         }
 
         [HttpPost]
@@ -30,6 +34,7 @@ namespace Biblioteca.Frontend.Controllers
             {
                
                 usuario.RolUsuario = Roles.Lector;
+                usuario.Estado = "Activo";
                 var json = JsonConvert.SerializeObject(usuario);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 

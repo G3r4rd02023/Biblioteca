@@ -26,5 +26,10 @@ namespace Biblioteca.Frontend.Models
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
 
         public Roles RolUsuario { get; set; }
+
+
+        [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Estado { get; set; }
     }
 }

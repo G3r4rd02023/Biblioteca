@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Biblioteca.Frontend.Models;
 using System.Text;
+using System.Reflection;
 
 namespace Biblioteca.Frontend.Controllers
 {
@@ -37,7 +38,7 @@ namespace Biblioteca.Frontend.Controllers
         {
             Prestamo prestamo = new()
             {
-                Clientes = await _servicioLista.GetListaClientes(),
+                //Clientes = await _servicioLista.GetListaClientes(),
                 Libros = await _servicioLista.GetListaLibros(),
                 EstadoPrestamo = "Pendiente"
             };
@@ -49,6 +50,12 @@ namespace Biblioteca.Frontend.Controllers
         {
             if (ModelState.IsValid)
             {
+                var email = Uri.EscapeDataString(User.Identity.Name);
+                var userResponse = await _httpClient.GetAsync($"/api/Usuarios/email/{email}");
+                var usuarioJson = await userResponse.Content.ReadAsStringAsync();
+                var usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJson);
+                prestamo.Usuario = usuario;
+                prestamo.UsuarioId = usuario.Id;
                 prestamo.EstadoPrestamo = "Pendiente";
                 prestamo.FechaPrestamo = DateTime.Now;                                
                 var json = JsonConvert.SerializeObject(prestamo);
@@ -67,7 +74,7 @@ namespace Biblioteca.Frontend.Controllers
                 }
             }
             prestamo.Libros = await _servicioLista.GetListaLibros();
-            prestamo.Clientes = await _servicioLista.GetListaClientes();
+            //prestamo.Clientes = await _servicioLista.GetListaClientes();
             return View(prestamo);
         }
 
@@ -83,7 +90,7 @@ namespace Biblioteca.Frontend.Controllers
             var jsonString = await response.Content.ReadAsStringAsync();
             var prestamo = JsonConvert.DeserializeObject<Prestamo>(jsonString);
             prestamo.Libros = await _servicioLista.GetListaLibros();
-            prestamo.Clientes = await _servicioLista.GetListaClientes();
+            //prestamo.Clientes = await _servicioLista.GetListaClientes();
 
             return View(prestamo);
         }
@@ -119,7 +126,7 @@ namespace Biblioteca.Frontend.Controllers
             }
 
             prestamo.Libros = await _servicioLista.GetListaLibros();
-            prestamo.Clientes = await _servicioLista.GetListaClientes();
+            //prestamo.Clientes = await _servicioLista.GetListaClientes();
             return View(prestamo);
         }
 

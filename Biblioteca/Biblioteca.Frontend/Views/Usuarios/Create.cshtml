@@ -14,6 +14,7 @@
         <div class=" card-body text-center">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Estado" />
                 <div class="form-group">
                     <label></label>
                     <input asp-for="NombreCompleto" class="form-control" placeholder=" Nombre Completo" />

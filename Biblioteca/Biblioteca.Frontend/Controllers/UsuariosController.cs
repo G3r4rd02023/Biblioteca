@@ -33,8 +33,12 @@ namespace Biblioteca.Frontend.Controllers
         }
 
         public IActionResult Create()
-        {           
-            return View();
+        {
+            Usuario usuario = new()
+            {
+                Estado = "Activo"
+            };
+            return View(usuario);
         }
 
         [HttpPost]
@@ -43,6 +47,7 @@ namespace Biblioteca.Frontend.Controllers
             if (ModelState.IsValid)
             {               
                 usuario.RolUsuario = Roles.Bibliotecario;
+                usuario.Estado = "Activo";
                 var json = JsonConvert.SerializeObject(usuario);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 

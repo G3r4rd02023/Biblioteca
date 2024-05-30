@@ -7,8 +7,8 @@ namespace Biblioteca.Frontend.Models
     public class Prestamo
     {
         public int Id { get; set; }
-        public Cliente Cliente { get; set; }
-        public int ClienteId { get; set; }
+        public Usuario Usuario { get; set; }
+        public int UsuarioId { get; set; }
         public Libro Libro { get; set; }
         public int LibroId { get; set; }
         public DateTime FechaPrestamo { get; set; } 
@@ -21,8 +21,7 @@ namespace Biblioteca.Frontend.Models
         [NotMapped]
         public IEnumerable<SelectListItem> Libros { get; set; }
 
-        [NotMapped]
-        public IEnumerable<SelectListItem> Clientes { get; set; }
+        
 
 
     }

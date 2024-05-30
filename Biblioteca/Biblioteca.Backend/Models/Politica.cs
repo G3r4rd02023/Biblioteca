@@ -2,19 +2,15 @@
 
 namespace Biblioteca.Backend.Models
 {
-    public class Cliente
+    public class Politica
     {
         public int Id { get; set; }
 
-        public string Codigo { get; set; }
-
         [MaxLength(100, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Cliente")]
-        public string NombreCompleto { get; set; }
+        public string Descripcion { get; set; }
 
-        [Display(Name = "Fecha de Creación")]
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
-
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int Valor { get; set; }
     }
 }

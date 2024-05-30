@@ -13,7 +13,7 @@
             <form asp-action="Return" method="post">
             <input type="hidden" asp-for="EstadoPrestamo" />
             <input type="hidden" asp-for="LibroId" />
-            <input type="hidden" asp-for="ClienteId" />
+            <input type="hidden" asp-for="UsuarioId" />
             <input type="hidden" asp-for="FechaPrestamo" />
             <div>
                 <h4>Informacion del prestamo</h4>
@@ -23,7 +23,7 @@
                         Cliente
                     </dt>
                     <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Cliente.NombreCompleto)
+                        @Html.DisplayFor(model => model.Usuario.NombreCompleto)
                     </dd>
                     <dt class="col-sm-2">
                         Libro

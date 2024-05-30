@@ -21,7 +21,7 @@ namespace Biblioteca.Backend.Controllers
         {
             return Ok(await _context.Prestamos
                 .Include(x => x.Libro)
-                .Include(x => x.Cliente)
+                .Include(x => x.Usuario)
                 .ToListAsync());
         }
 
@@ -38,7 +38,7 @@ namespace Biblioteca.Backend.Controllers
         {
             var prestamo = await _context.Prestamos
                 .Include(x => x.Libro)
-                .Include(x => x.Cliente)
+                .Include(x => x.Usuario)
                 .SingleOrDefaultAsync(c => c.Id == id);
             if (prestamo == null)
             {

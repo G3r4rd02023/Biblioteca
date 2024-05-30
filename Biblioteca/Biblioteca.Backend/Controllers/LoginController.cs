@@ -46,7 +46,7 @@ namespace Biblioteca.Backend.Controllers
                 .SingleOrDefaultAsync(u => u.Correo == login.NombreUsuario);          
 
             if (usuario != null)
-            {
+            {                
                 if (BCrypt.Net.BCrypt.Verify(login.Clave, usuario.Clave))
                 {
                     // Aquí puedes agregar la lógica para generar un token JWT o manejar la sesión como prefieras
