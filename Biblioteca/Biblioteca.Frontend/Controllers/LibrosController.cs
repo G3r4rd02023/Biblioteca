@@ -36,6 +36,7 @@ namespace Biblioteca.Frontend.Controllers
             Libro libro = new()
             {
                 Categorias = await _servicioLista.GetListaCategorias(),
+                Estado = "Disponible"
             };
             return View(libro);
         }
@@ -43,6 +44,7 @@ namespace Biblioteca.Frontend.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Libro libro)
         {
+            //libro.Estado = "Disponible";
             var respuesta = await _httpClient.GetAsync("/api/Libros");
             var contenido = await respuesta.Content.ReadAsStringAsync();
             var libros = JsonConvert.DeserializeObject<IEnumerable<Libro>>(contenido);
@@ -124,5 +126,63 @@ namespace Biblioteca.Frontend.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public async Task<IActionResult> Solicitud(int id)
+        {
+
+            var response = await _httpClient.GetAsync($"/api/Libros/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                TempData["ErrorMessage"] = "Error al obtener el libro.";
+                return RedirectToAction("Index");
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var libro = JsonConvert.DeserializeObject<Libro>(jsonString);
+
+            var email = Uri.EscapeDataString(User.Identity.Name);
+            var userResponse = await _httpClient.GetAsync($"/api/Usuarios/email/{email}");
+            var usuarioJson = await userResponse.Content.ReadAsStringAsync();
+            var usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJson);
+
+            Prestamo prestamo = new()
+            {                
+                UsuarioId = usuario.Id,
+                Usuario = usuario,
+                Libro = libro,
+                LibroId = libro.Id,
+                EstadoPrestamo = "Reservado",
+                FechaPrestamo = DateTime.Now
+            };
+            return View(prestamo);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Solicitud(Prestamo prestamo)
+        {
+            if (ModelState.IsValid)
+            {                
+                var json = JsonConvert.SerializeObject(prestamo);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PostAsync("/api/Prestamos/", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["AlertMessage"] = "Prestamo creado exitosamente!!!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    TempData["ErrorMessage"] = $"Error al crear el prestamo: {errorMessage}";
+                    return RedirectToAction("Index");
+                }
+            }
+            
+            return View(prestamo);
+        }
+
+        
     }
 }

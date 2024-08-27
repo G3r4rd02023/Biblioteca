@@ -26,8 +26,20 @@ namespace Biblioteca.Frontend.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                var email = Uri.EscapeDataString(User.Identity.Name);
+                var userResponse = await _httpClient.GetAsync($"/api/Usuarios/email/{email}");
+                var usuarioJson = await userResponse.Content.ReadAsStringAsync();
+                var usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJson);
+
                 var content = await response.Content.ReadAsStringAsync();
                 var prestamos = JsonConvert.DeserializeObject<IEnumerable<Prestamo>>(content);
+
+                if (usuario.RolUsuario == Roles.Lector)
+                {
+                    var misPrestamos = prestamos.Where(p => p.Usuario.Correo == usuario.Correo);
+                    return View("Index", misPrestamos);
+                }
+                                
                 return View("Index", prestamos);
             }
 
@@ -78,7 +90,7 @@ namespace Biblioteca.Frontend.Controllers
             return View(prestamo);
         }
 
-        public async Task<IActionResult> Return(int id)
+        public async Task<IActionResult> Devolucion(int id)
         {
             var response = await _httpClient.GetAsync($"/api/Prestamos/{id}");
             if (!response.IsSuccessStatusCode)
@@ -89,44 +101,32 @@ namespace Biblioteca.Frontend.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
             var prestamo = JsonConvert.DeserializeObject<Prestamo>(jsonString);
-            prestamo.Libros = await _servicioLista.GetListaLibros();
-            //prestamo.Clientes = await _servicioLista.GetListaClientes();
 
             return View(prestamo);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Return(int id, Prestamo prestamo)
+        public async Task<IActionResult> Devolucion(int id, Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
-               if(prestamo.EstadoPrestamo == "Pendiente")
-               {
-                    prestamo.FechaDevolucion = DateTime.Now;
-                    prestamo.EstadoPrestamo = "Disponible";
-                    var json = JsonConvert.SerializeObject(prestamo);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await _httpClient.PutAsync($"/api/Prestamos/{id}", content);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        TempData["AlertMessage"] = "Libro devuelto exitosamente!!!";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Error al intentar realizar la devolucion.";
-                        return RedirectToAction("Index");
-                    }
+                prestamo.FechaDevolucion = DateTime.Now;
+                prestamo.EstadoPrestamo = "Disponible";
+                var json = JsonConvert.SerializeObject(prestamo);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"/api/Prestamos/{id}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["AlertMessage"] = "Libro devuelto exitosamente!!!";
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    TempData["WarningMessage"] = "Este libro ya fue devuelto y se encuentra disponible";
+                    TempData["ErrorMessage"] = "Error al intentar realizar la devolucion.";
                     return RedirectToAction("Index");
                 }
             }
 
-            prestamo.Libros = await _servicioLista.GetListaLibros();
-            //prestamo.Clientes = await _servicioLista.GetListaClientes();
             return View(prestamo);
         }
 

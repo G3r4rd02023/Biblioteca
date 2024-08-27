@@ -15,5 +15,6 @@ namespace Biblioteca.Backend.Models
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string EstadoPrestamo { get; set; }
+        public int Cantidad { get; set; }
     }
 }

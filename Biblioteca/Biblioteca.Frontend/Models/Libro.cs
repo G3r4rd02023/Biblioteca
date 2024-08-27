@@ -31,5 +31,9 @@ namespace Biblioteca.Frontend.Models
 
         [NotMapped]
         public IEnumerable<SelectListItem> Categorias { get; set; }
+
+        [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Estado { get; set; }
     }
 }

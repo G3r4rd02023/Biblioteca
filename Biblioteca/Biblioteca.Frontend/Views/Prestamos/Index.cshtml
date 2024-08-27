@@ -70,7 +70,7 @@
                             <td>@Html.DisplayFor(modelItem => item.FechaPrestamo)</td>
                             <td>@Html.DisplayFor(modelItem => item.FechaDevolucion)</td>
                             <td>
-                                @if (item.EstadoPrestamo == "Pendiente")
+                                @if (item.EstadoPrestamo == "Reservado")
                                 {
                                     <span class="estado-pendiente text-white">@Html.DisplayFor(modelItem => item.EstadoPrestamo)</span>
                                     
@@ -81,10 +81,10 @@
                                 }
                             </td>
                             <td>
-                                @if(item.EstadoPrestamo == "Pendiente")
+                                @if(item.EstadoPrestamo == "Reservado")
                                 {
                                     <button class="btn btn-outline-primary btn-sm"><i class="fa-solid fa-calendar"></i></button>
-                                    <a onclick="showInPopup('@Url.Action("Return", "Prestamos", new { id = item.Id }, Context.Request.Scheme)' ,
+                                    <a onclick="showInPopup('@Url.Action("Devolucion", "Prestamos", new { id = item.Id }, Context.Request.Scheme)' ,
                     '')" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-left"></i></a>
                                     <button data-id="@item.Id" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
                                         <i class="fa fa-trash"></i>
@@ -92,7 +92,8 @@
                                 }
                                 else
                                 {
-                                   
+                                    <a onclick="showInPopup('@Url.Action("Devolucion", "Prestamos", new { id = item.Id }, Context.Request.Scheme)' ,
+                    '')" class="btn btn-outline-success btn-sm"><i class="fa-solid fa-arrow-rotate-left"></i></a>
                                     <button data-id="@item.Id" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
                                         <i class="fa fa-trash"></i>
                                     </button>

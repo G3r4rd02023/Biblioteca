@@ -25,13 +25,51 @@ namespace Biblioteca.Backend.Controllers
                 .ToListAsync());
         }
 
+
         [HttpPost]
         public async Task<IActionResult> PostAsync(Prestamo prestamo)
         {
-            _context.Add(prestamo);
+            if (prestamo == null)
+            {
+                return BadRequest("Prestamo no puede ser nulo.");
+            }
+
+            var libro = await _context.Libros.FindAsync(prestamo.LibroId);
+
+            if (libro == null)
+            {
+                return NotFound("Libro no encontrado.");
+            }
+
+            if (prestamo.Cantidad <= 0)
+            {
+                return BadRequest("La cantidad de prestamo debe ser mayor que cero.");
+            }
+
+            if (libro.Cantidad < prestamo.Cantidad)
+            {
+                return BadRequest("No hay suficientes libros disponibles.");
+            }
+
+           
+
+            libro.Cantidad -= prestamo.Cantidad;
+            
+            if (libro.Cantidad == 0)
+            {
+                libro.Estado = "NoDisponible";
+            }
+
+            prestamo.Id = 0;
+
+            _context.Prestamos.Add(prestamo);
+            _context.Libros.Update(libro);  
             await _context.SaveChangesAsync();
+            
             return Ok();
         }
+
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
@@ -39,13 +77,14 @@ namespace Biblioteca.Backend.Controllers
             var prestamo = await _context.Prestamos
                 .Include(x => x.Libro)
                 .Include(x => x.Usuario)
-                .SingleOrDefaultAsync(c => c.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
             if (prestamo == null)
             {
                 return NotFound();
             }
             return Ok(prestamo);
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] Prestamo prestamo)
@@ -55,7 +94,17 @@ namespace Biblioteca.Backend.Controllers
                 return BadRequest();
             }
 
+            var libro = await _context.Libros.FindAsync(prestamo.LibroId);
+
+            if (libro == null)
+            {
+                return NotFound("Libro no encontrado.");
+            }
+
+            libro.Cantidad += prestamo.Cantidad;
+            libro.Estado = "Disponible";
             _context.Update(prestamo);
+            _context.Libros.Update(libro);
             await _context.SaveChangesAsync();
             return NoContent();
         }

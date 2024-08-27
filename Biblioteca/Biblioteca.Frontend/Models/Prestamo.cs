@@ -14,6 +14,8 @@ namespace Biblioteca.Frontend.Models
         public DateTime FechaPrestamo { get; set; } 
         public DateTime FechaDevolucion { get; set; }
 
+        public int Cantidad { get; set; } 
+
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string EstadoPrestamo { get; set; }
