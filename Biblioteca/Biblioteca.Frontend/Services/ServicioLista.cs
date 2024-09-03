@@ -6,7 +6,6 @@ namespace Biblioteca.Frontend.Services
 {
     public class ServicioLista : IServicioLista
     {
-
         private readonly HttpClient _httpClient;
 
         public ServicioLista(IHttpClientFactory httpClientFactory)
@@ -14,6 +13,7 @@ namespace Biblioteca.Frontend.Services
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7055/");
         }
+
         public async Task<IEnumerable<SelectListItem>> GetListaCategorias()
         {
             var response = await _httpClient.GetAsync("/api/Categorias");
@@ -25,7 +25,7 @@ namespace Biblioteca.Frontend.Services
                 {
                     Value = c.Id.ToString(),
                     Text = c.Nombre
-                }).ToList(); 
+                }).ToList();
 
                 listaCategorias.Insert(0, new SelectListItem
                 {
@@ -37,8 +37,6 @@ namespace Biblioteca.Frontend.Services
 
             return [];
         }
-
-        
 
         public async Task<IEnumerable<SelectListItem>> GetListaLibros()
         {
@@ -73,6 +71,14 @@ namespace Biblioteca.Frontend.Services
                            Text = e.ToString()
                        })
                        .ToList();
+        }
+
+        public async Task<Usuario> GetUsuarioByEmail(string email)
+        {
+            var userResponse = await _httpClient.GetAsync($"/api/Usuarios/email/{email}");
+            var usuarioJson = await userResponse.Content.ReadAsStringAsync();
+            var usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJson);
+            return usuario!;
         }
     }
 }

@@ -3,14 +3,18 @@ using Newtonsoft.Json;
 using Biblioteca.Frontend.Models;
 using Biblioteca.Frontend.Services;
 using System.Text;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblioteca.Frontend.Controllers
 {
+    [Authorize]
     public class LibrosController : Controller
     {
         private readonly HttpClient _httpClient;
         private readonly IServicioLista _servicioLista;
-        public LibrosController(IHttpClientFactory httpClientFactory,IServicioLista servicioLista)
+
+        public LibrosController(IHttpClientFactory httpClientFactory, IServicioLista servicioLista)
         {
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7055/");
@@ -19,6 +23,11 @@ namespace Biblioteca.Frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var user = await _servicioLista.GetUsuarioByEmail(User.Identity!.Name!);
+            var apiService = new ServicioToken();
+            var token = await apiService.Autenticar(user);
+            // Realiza la solicitud HTTP al endpoint protegido
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _httpClient.GetAsync("/api/Libros");
 
             if (response.IsSuccessStatusCode)
@@ -129,7 +138,6 @@ namespace Biblioteca.Frontend.Controllers
 
         public async Task<IActionResult> Solicitud(int id)
         {
-
             var response = await _httpClient.GetAsync($"/api/Libros/{id}");
             if (!response.IsSuccessStatusCode)
             {
@@ -146,7 +154,7 @@ namespace Biblioteca.Frontend.Controllers
             var usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJson);
 
             Prestamo prestamo = new()
-            {                
+            {
                 UsuarioId = usuario.Id,
                 Usuario = usuario,
                 Libro = libro,
@@ -161,7 +169,7 @@ namespace Biblioteca.Frontend.Controllers
         public async Task<IActionResult> Solicitud(Prestamo prestamo)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 var json = JsonConvert.SerializeObject(prestamo);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -179,10 +187,8 @@ namespace Biblioteca.Frontend.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            
+
             return View(prestamo);
         }
-
-        
     }
 }

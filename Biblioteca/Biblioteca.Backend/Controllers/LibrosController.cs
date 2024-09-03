@@ -1,12 +1,13 @@
 ﻿using Biblioteca.Backend.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Biblioteca.Backend.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class LibrosController : ControllerBase
     {
